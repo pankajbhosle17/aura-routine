@@ -1,0 +1,20 @@
+{
+  "name": "aura-routine-server",
+  "version": "1.0.0",
+  "description": "Node.js/Express API layer for AuraRoutine. Talks to SQLite for storage and spawns the C++ engine for scheduling + analytics.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "nanoid": "^5.0.7"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

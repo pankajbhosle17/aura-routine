@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+.npm/
+
+# Build output
+client/dist/
+client/.vite/
+
+# Compiled C++ binary (build it locally with `make`)
+cpp-engine/engine
+cpp-engine/*.o
+cpp-engine/*.exe
+
+# Database
+server/data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Env files
+.env
+*.env.local
+
+# Editor / OS
+.DS_Store
+.vscode/
+*.log

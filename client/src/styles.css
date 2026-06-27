@@ -1,0 +1,483 @@
+/* ----------------------------------------------------------------------
+   AuraRoutine design tokens
+   Theme: "Dusk-to-Dawn" — the app's whole visual language is built around
+   one idea: a day is an arc of time. The signature element (see DayRing.jsx
+   and ConsistencyGauge.jsx) is a circular dial that stands in for both
+   "today's schedule" and "your consistency score" so the metaphor carries
+   across the whole product instead of being a one-off decoration.
+   ------------------------------------------------------------------- */
+
+:root {
+  /* Color */
+  --ink: #1b1830;          /* app background: deep indigo-plum, not pure black */
+  --surface: #262247;      /* cards */
+  --surface-2: #322c58;    /* hover / nested surfaces */
+  --line: #3c356b;         /* hairline borders on dark surfaces */
+  --paper: #f3efe6;        /* primary text, warm off-white (not pure white) */
+  --muted: #b3acd6;        /* secondary text */
+  --faint: #8d85b8;        /* tertiary / placeholder text */
+
+  --dawn: #ff9d6c;         /* warm accent: sunrise amber-coral */
+  --dusk: #c792ea;         /* cool accent: dusk violet */
+  --teal: #5eead4;         /* success / streak accent */
+  --rose: #ff7a93;         /* alert / conflict accent */
+
+  --cat-1: #ff9d6c; /* dawn amber */
+  --cat-2: #c792ea; /* dusk violet */
+  --cat-3: #5eead4; /* teal */
+  --cat-4: #ffd166; /* gold */
+  --cat-5: #7fb3ff; /* sky */
+  --cat-6: #ff7a93; /* rose */
+
+  /* Type */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Layout */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --shadow-soft: 0 12px 32px rgba(10, 8, 24, 0.35);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(120% 120% at 10% -10%, #2a2454 0%, var(--ink) 55%);
+  color: var(--paper);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+/* ---------------- App shell ---------------- */
+
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 28px clamp(20px, 5vw, 56px) 8px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.brand span {
+  color: var(--dawn);
+}
+
+.today-label {
+  font-family: var(--font-mono);
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tab-nav {
+  display: flex;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.tab-nav button {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 999px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.tab-nav button.active {
+  background: var(--dawn);
+  color: #1b1830;
+}
+
+.app-main {
+  flex: 1;
+  padding: 12px clamp(20px, 5vw, 56px) 56px;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 880px) {
+  .app-main.today-layout {
+    grid-template-columns: 340px 1fr;
+    align-items: start;
+  }
+}
+
+/* ---------------- Cards ---------------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+}
+
+.card h2 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  margin: 0 0 16px;
+  font-weight: 600;
+}
+
+/* ---------------- Day Ring panel ---------------- */
+
+.ring-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+.ring-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.ring-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.ring-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.btn {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--dawn), var(--dusk));
+  color: #1b1830;
+  width: 100%;
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--paper);
+  width: 100%;
+}
+
+.btn-secondary:hover { background: var(--surface-2); }
+
+.btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+/* ---------------- Task list ---------------- */
+
+.task-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.conflict-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 122, 147, 0.12);
+  border: 1px solid rgba(255, 122, 147, 0.4);
+  color: var(--rose);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.task-card {
+  display: grid;
+  grid-template-columns: 24px 70px 1fr auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  transition: background 0.15s ease;
+}
+
+.task-card:hover { background: var(--surface-2); }
+
+.task-card + .task-card { border-top: 1px solid var(--line); }
+
+.task-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--faint);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.task-check.done {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #1b1830;
+}
+
+.task-time {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.task-name-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.task-name {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.task-name.done {
+  text-decoration: line-through;
+  color: var(--faint);
+}
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.category-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.priority-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+
+.priority-High { background: rgba(255, 122, 147, 0.18); color: var(--rose); }
+.priority-Medium { background: rgba(255, 209, 102, 0.18); color: var(--cat-4); }
+.priority-Low { background: rgba(127, 179, 255, 0.18); color: var(--cat-5); }
+
+.task-delete {
+  background: transparent;
+  border: none;
+  color: var(--faint);
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.task-delete:hover { color: var(--rose); background: rgba(255, 122, 147, 0.1); }
+
+.empty-state {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--muted);
+}
+
+.empty-state .big {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--paper);
+  margin-bottom: 6px;
+}
+
+/* ---------------- Task form ---------------- */
+
+.task-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.task-form .full { grid-column: 1 / -1; }
+
+.task-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.task-form input,
+.task-form select {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.task-form .actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ---------------- Analytics ---------------- */
+
+.analytics-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 880px) {
+  .analytics-grid {
+    grid-template-columns: 300px 1fr;
+    align-items: start;
+  }
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+.stat-box {
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+}
+
+.stat-box .num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--dawn);
+}
+
+.stat-box .label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}
+
+.breakdown-row {
+  margin-bottom: 14px;
+}
+
+.breakdown-row .top-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.breakdown-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.breakdown-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.muted-note {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.error-banner {
+  background: rgba(255, 122, 147, 0.12);
+  border: 1px solid rgba(255, 122, 147, 0.4);
+  color: var(--rose);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  margin: 0 clamp(20px, 5vw, 56px);
+}
+
+.app-footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--faint);
+  padding: 16px 0 28px;
+}
